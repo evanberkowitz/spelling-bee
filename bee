@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+WORDLIST=/usr/share/dict/words
+
+letters=$1
+
+middle=${letters:0:1}
+rest=${letters:1}
+
+all="("
+for i in $(seq 0 ${#letters}); do
+	i=${letters:i:1}
+	all+="$i|"
+done
+all=${all%?}")*"
+
+pattern="^${all}${middle}${all}(/.*)?$"
+
+#echo $pattern
+
+grep -i -E "$pattern" $WORDLIST | cut -d '/' -f 1 | awk '{ if(length($1) > 3) print $1 }'
+
