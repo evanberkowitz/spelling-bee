@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 WORDLIST=/usr/share/dict/words
+CUSTOMIZATION=./missing-words
+FILTER=./filter
 
 letters=$1
 
@@ -18,5 +20,6 @@ pattern="^${all}${middle}${all}(/.*)?$"
 
 #echo $pattern
 
-grep -E "$pattern" $WORDLIST | cut -d '/' -f 1 | awk '{ if(length($1) > 3) print $1 }'
-
+for f in $WORDLIST $CUSTOMIZATION; do
+	grep -E "$pattern" $f | cut -d '/' -f 1 | awk '{ if(length($1) > 3) print $1 }' 
+done | sort | comm -13 <(sort $FILTER) - | column
