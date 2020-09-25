@@ -22,4 +22,4 @@ pattern="^${all}${middle}${all}(/.*)?$"
 
 for f in $WORDLIST $CUSTOMIZATION; do
 	grep -E "$pattern" $f | cut -d '/' -f 1 | awk '{ if(length($1) > 3) print $1 }' 
-done | sort | comm -13 <(sort $FILTER) - | column
+done | sort -u | comm -13 <(sort $FILTER) - | awk '{print length, $0}' | sort -n | cut -d' ' -f2-| column
