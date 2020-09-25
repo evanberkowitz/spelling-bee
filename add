@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+MISSING=./missing-words
+
+for word in $@; do
+	echo $word >> $MISSING
+done

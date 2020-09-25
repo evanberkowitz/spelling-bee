@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+FILTER=./filter
+
+for word in $@; do
+	echo $word >> $FILTER
+done
